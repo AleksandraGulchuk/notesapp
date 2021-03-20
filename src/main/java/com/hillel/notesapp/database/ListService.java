@@ -21,12 +21,12 @@ public class ListService implements Service {
     public void delete(int index) {
         int delIndex = -1;
         for (int i = 0; i < notes.size(); i++) {
-            if(notes.get(i).getId() == index) {
+            if (notes.get(i).getId() == index) {
                 delIndex = i;
                 break;
             }
         }
-        if(delIndex >= 0)
+        if (delIndex >= 0)
             notes.remove(delIndex);
     }
 

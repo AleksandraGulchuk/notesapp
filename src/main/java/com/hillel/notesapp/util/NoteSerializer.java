@@ -4,6 +4,8 @@ import com.hillel.notesapp.dto.Note;
 import com.hillel.notesapp.dto.NoteStringParam;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class NoteSerializer {
 
@@ -21,5 +23,12 @@ public class NoteSerializer {
                 .setTitle(note.getTitle())
                 .setDescription(note.getDescription())
                 .setDateTime(LocalDateTime.parse(note.getDateTime()));
+    }
+
+    public static List<NoteStringParam> convertListNoteToStringParam(List<Note> notes){
+            return notes.stream()
+                    .map(NoteSerializer::convertNoteToStringParam)
+                    .collect(Collectors.toList());
+
     }
 }

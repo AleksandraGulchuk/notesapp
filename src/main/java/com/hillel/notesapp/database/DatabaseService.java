@@ -6,7 +6,6 @@ import com.hillel.notesapp.util.RowMapper;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -18,13 +17,15 @@ public class DatabaseService implements Service {
 
     {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:postgresql://localhost:5433/notesapp");
+        config.setDataSourceClassName("org.postgresql.ds.PGSimpleDataSource");
+        config.setJdbcUrl("jdbc:postgresql://localhost:5432/notesapp");
         config.setUsername("postgres");
         config.setPassword("0000");
         config.setMaximumPoolSize(8);
         config.setMinimumIdle(4);
         DataSource dataSource = new HikariDataSource(config);
         this.jdbcTemplate = new JdbcTemplate(dataSource);
+        createTable();
     }
 
     @Override
@@ -65,6 +66,15 @@ public class DatabaseService implements Service {
             }
             return new Note();
         };
+    }
+
+    private void createTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS notes (" +
+                "id SERIAL PRIMARY KEY, " +
+                "title VARCHAR(50), " +
+                "description VARCHAR(250), " +
+                "datetime TIMESTAMP NOT NULL);";
+        jdbcTemplate.update(sql);
     }
 
 }

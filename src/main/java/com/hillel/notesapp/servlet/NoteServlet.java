@@ -6,9 +6,9 @@ import com.hillel.notesapp.dto.Note;
 import com.hillel.notesapp.dto.NoteResponse;
 import com.hillel.notesapp.dto.NoteStringParam;
 import com.hillel.notesapp.util.NoteSerializer;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 

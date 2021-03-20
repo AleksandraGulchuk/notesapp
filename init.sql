@@ -1,4 +1,4 @@
-CREATE DATABASE contactbook;
+CREATE DATABASE notesapp;
 
 CREATE TABLE notes (
     id SERIAL PRIMARY KEY,

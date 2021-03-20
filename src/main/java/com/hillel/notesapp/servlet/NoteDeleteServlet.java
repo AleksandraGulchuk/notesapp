@@ -5,8 +5,9 @@ import com.hillel.notesapp.database.Service;
 import com.hillel.notesapp.dto.NoteResponse;
 import com.hillel.notesapp.dto.NoteStringParam;
 import com.hillel.notesapp.util.Checker;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class NoteDeleteServlet extends JsonServlet {
 
@@ -28,5 +29,4 @@ public class NoteDeleteServlet extends JsonServlet {
         }
         writeJson(noteResponse, response);
     }
-
 }
