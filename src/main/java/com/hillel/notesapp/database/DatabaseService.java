@@ -31,7 +31,7 @@ public class DatabaseService implements Service {
     @Override
     public List<Note> getAllNotes() {
         String sql = "SELECT id, title, description, datetime " +
-                "FROM notes ORDER BY title;";
+                "FROM notes ORDER BY id;";
         return jdbcTemplate.query(sql, getRowMapper());
     }
 
@@ -43,12 +43,12 @@ public class DatabaseService implements Service {
     }
 
     @Override
-    public void add(String title, String description) {
+    public void add(Note note) {
         String sql = "INSERT INTO notes (title, description, datetime) " +
                 "SELECT ?, ?, ? ;";
         Object[] params = new Object[]{
-                title,
-                description,
+                note.getTitle(),
+                note.getDescription(),
                 LocalDateTime.now()
         };
         jdbcTemplate.update(sql, params);

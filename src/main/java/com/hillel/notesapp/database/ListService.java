@@ -31,11 +31,11 @@ public class ListService implements Service {
     }
 
     @Override
-    public void add(String title, String description) {
+    public void add(Note note) {
         notes.add(new Note()
                 .setId(newId())
-                .setTitle(title)
-                .setDescription(description)
+                .setTitle(note.getTitle())
+                .setDescription(note.getDescription())
                 .setDateTime(LocalDateTime.now()));
     }
 

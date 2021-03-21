@@ -16,6 +16,7 @@ import java.util.List;
 public class NoteResponse {
 
     private String status;
+    private NoteStringParam note;
     private List<NoteStringParam> notes;
     private String error;
     private String message;

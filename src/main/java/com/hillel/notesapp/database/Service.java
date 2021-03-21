@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface Service {
 
-    public List<Note> getAllNotes();
-    public void delete(int index);
-    public void add(String title, String description);
+    List<Note> getAllNotes();
+
+    void delete(int index);
+
+    void add(Note note);
 
 }

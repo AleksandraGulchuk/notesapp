@@ -2,31 +2,34 @@ package com.hillel.notesapp.servlet;
 
 import com.hillel.notesapp.NotesRepository;
 import com.hillel.notesapp.database.Service;
-import com.hillel.notesapp.dto.NoteResponse;
-import com.hillel.notesapp.dto.NoteStringParam;
 import com.hillel.notesapp.util.Checker;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-public class NoteDeleteServlet extends JsonServlet {
+public class NoteDeleteServlet extends HttpServlet {
 
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        NoteStringParam noteStringParam = readJson(NoteStringParam.class, request);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String idStr = request.getParameter("id");
+        if (idStr.length() == 0) {
+            request.setAttribute("message", "Note not deleted: note not found");
+            request.getRequestDispatcher("WEB-INF/views/resultmessage.jsp").forward(request, response);
+            return;
+        }
         Service service = NotesRepository.instance().getService();
         Checker checker = new Checker(service);
-        int id = Integer.parseInt(noteStringParam.getId());
-        NoteResponse noteResponse = new NoteResponse();
+        int id = Integer.parseInt(idStr);
         if (checker.checkId(id)) {
             service.delete(id);
-            noteResponse.setStatus("ok")
-                    .setMessage("Note deleted successfully");
+            request.setAttribute("message", "Note deleted successfully");
         } else {
-            noteResponse.setStatus("error")
-                    .setMessage("Note not found");
+            request.setAttribute("message", "Note not deleted: note not found");
         }
-        writeJson(noteResponse, response);
+        request.getRequestDispatcher("WEB-INF/views/resultmessage.jsp").forward(request, response);
     }
 }
