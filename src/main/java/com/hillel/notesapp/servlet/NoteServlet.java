@@ -17,21 +17,21 @@ public class NoteServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         Service service = NotesRepository.instance().getService();
-        List<Note> notes = service.getAllNotes();
+//        List<Note> notes = service.getAllNotes();
         String idStr = request.getParameter("id");
         if (idStr == null) {
-            request.setAttribute("notes", notes);
+            request.setAttribute("notes", service.getAllNotes());
             request.getRequestDispatcher("WEB-INF/views/main.jsp").forward(request, response);
         } else {
             int id = Integer.parseInt(idStr);
-            for (Note note : notes) {
-                if (id == note.getId()) {
-                    request.setAttribute("note", note);
-                    request.getRequestDispatcher("WEB-INF/views/note.jsp").forward(request, response);
-                    break;
-                }
+            Note note = service.getNote(id);
+            if (note != null) {
+                request.setAttribute("note", note);
+                request.getRequestDispatcher("WEB-INF/views/note.jsp").forward(request, response);
+            } else {
+                request.setAttribute("message", "Note not found");
+                request.getRequestDispatcher("WEB-INF/views/resultmessage.jsp").forward(request, response);
             }
         }
     }

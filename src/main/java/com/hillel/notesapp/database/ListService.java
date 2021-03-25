@@ -39,6 +39,16 @@ public class ListService implements Service {
                 .setDateTime(LocalDateTime.now()));
     }
 
+    @Override
+    public Note getNote(int id) {
+        for (Note note : notes) {
+            if (note.getId() == id) {
+                return note;
+            }
+        }
+        return null;
+    }
+
     private int newId() {
         return notes.stream().map(Note::getId)
                 .max(Comparator.comparingInt(a -> a))

@@ -12,4 +12,5 @@ public interface Service {
 
     void add(Note note);
 
+    Note getNote(int id);
 }

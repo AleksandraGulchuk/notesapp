@@ -36,9 +36,9 @@ public class DatabaseService implements Service {
     }
 
     @Override
-    public void delete(int index) {
+    public void delete(int id) {
         String sql = "DELETE FROM notes WHERE id = ?;";
-        Object[] params = new Object[]{index};
+        Object[] params = new Object[]{id};
         jdbcTemplate.update(sql, params);
     }
 
@@ -52,6 +52,14 @@ public class DatabaseService implements Service {
                 LocalDateTime.now()
         };
         jdbcTemplate.update(sql, params);
+    }
+
+    @Override
+    public Note getNote(int id) {
+        String sql = "SELECT id, title, description, datetime " +
+                "FROM notes WHERE id = ?;";
+        Object[] params = new Object[]{id};
+        return (Note) jdbcTemplate.queryOne(sql, params, getRowMapper());
     }
 
     private RowMapper getRowMapper() {
